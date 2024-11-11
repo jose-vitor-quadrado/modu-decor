@@ -1,7 +1,8 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const products = require("./data/Products");
 const mongoose = require("mongoose");
+const products = require("./data/Products");
+const databaseSeeder = require("./databaseSeeder");
 
 const app = express();
 
@@ -24,6 +25,10 @@ mongoose.connect(process.env.MONGOOSEDB_URL)
   .then((err) => {
     err;
   });
+
+
+// database seeder routes
+app.use("/api/seed", databaseSeeder);
 
 app.listen(PORT || 9000, () => {
   console.log(`server listening on port ${PORT}`);
