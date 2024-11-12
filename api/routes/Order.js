@@ -70,4 +70,15 @@ orderRoute.get("/", protect, AsyncHandler(async (req, res) => {
   }
 }));
 
+orderRoute.get("/:id", protect, AsyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id).populate("user", "email");
+  if (order) {
+    res.status(200).json(order);
+  }
+  else {
+    res.status(404);
+    throw new Error("Order not found");
+  }
+}));
+
 module.exports = orderRoute;
